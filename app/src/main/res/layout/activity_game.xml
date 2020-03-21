@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity"
+    tools:layout_editor_absoluteY="81dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/mainGameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/timerText"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/circularbook"
+                    android:src="@drawable/stopwatch"
+                    android:text="Time: "
+                    android:textColor="@color/darkGrey"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularbook"
+                    android:text="00:00"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/progressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="35dp"
+                    android:progress="45"
+                    android:progressDrawable="@drawable/progress_bar" />
+
+                <TextView
+                    android:id="@+id/progressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="01 / 64"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/circularbook" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:text="Word"
+                android:textColor="@color/darkGrey"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/circularbold" />
+
+            <EditText
+                android:id="@+id/inputText"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:fontFamily="@font/circularbook"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </View>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nextLevelLayout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#FFC107">
+
+        <TextView
+            android:id="@+id/levelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/circularbold"
+            android:text="Round 1"
+            android:textSize="36sp"
+            android:textColor="@color/darkGrey"/>
+
+        <TextView
+            android:id="@+id/levelDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/circularbook"
+            android:text="Type 64 words within a minute to pass this round"
+            android:textSize="20sp"
+            android:textColor="@color/darkGrey"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/levelStartButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/button_normal"
+            android:fontFamily="@font/circularbold"
+            android:onClick="nextLevelStartClicked"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="Start"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
