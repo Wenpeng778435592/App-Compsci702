@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="darkGrey">#444</color>
-    <color name="green">#61B329</color>
-    <color name="red">#f51b00</color>
+    <color name="green">#50c878</color>
+    <color name="red">#e74f4e</color>
     <color name="lightGrey">#eeeeee</color>
+    <color name="yellow">#FFC107</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.compsci702.compsci702app;
+package com.compsci702.compsci702app.Tools;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,53 +16,40 @@ public class DBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "WordBank.db";
     private static int SCHEMA_NUMBER = 1;
 
-
     public DBHelper(Context context){
         super(context,DATABASE_NAME,null,SCHEMA_NUMBER);
         this.context = context;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-
-    }
+    public void onCreate(SQLiteDatabase db) { }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         if(newVersion>oldVersion) {
             copyDBFromResource();
         }
     }
 
     @Override
-    public void onOpen(SQLiteDatabase db) {
-        super.onOpen(db);
-    }
+    public void onOpen(SQLiteDatabase db) { super.onOpen(db); }
 
     public void createDB(){
-        if(!dbExists()){
-            copyDBFromResource();
-        }
-
+        if(!dbExists()){ copyDBFromResource(); }
     }
 
     private boolean dbExists(){
-
         File databasePath = context.getDatabasePath(DATABASE_NAME);
         File temp = new File(databasePath.getPath());
 
-        if (temp.exists()) return true;
+        if (temp.exists()){ return true; };
 
-        if (!temp.getParentFile().exists()) {
-            temp.getParentFile().mkdirs();
-        }
+        if (!temp.getParentFile().exists()) { temp.getParentFile().mkdirs(); }
 
         return false;
     }
 
     private void copyDBFromResource() {
-
         InputStream myInput;
         OutputStream myOutput;
 
