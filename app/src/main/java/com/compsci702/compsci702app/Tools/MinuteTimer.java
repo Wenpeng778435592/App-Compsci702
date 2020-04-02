@@ -8,13 +8,14 @@ public class MinuteTimer {
     TextView timerText;
 
     public MinuteTimer(TextView timerText){
+
         this.timerText = timerText;
     }
 
     //Starts the timer. Counts down from one minute (01:00). Sets the
     //textField with the new time every second (01:00, 00:59, etc)
     public void startTimer(){
+        //rb start one minute timer
 
     }
-
 }

@@ -16,7 +16,7 @@ public class WordList {
     }
 
     private ArrayList<String> getWordListFromDatabase(int listLength){
-        //Dummy data
+        //rb /Dummy data
         wordList.add("Word");
         wordList.add("Jumper");
         return wordList;

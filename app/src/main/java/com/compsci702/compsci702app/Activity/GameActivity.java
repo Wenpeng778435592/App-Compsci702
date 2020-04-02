@@ -1,7 +1,10 @@
 package com.compsci702.compsci702app.Activity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +20,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.compsci702.compsci702app.Level.Level;
 import com.compsci702.compsci702app.Level.Level1;
 import com.compsci702.compsci702app.Level.LevelType;
 import com.compsci702.compsci702app.LevelController;
 import com.compsci702.compsci702app.R;
+import com.compsci702.compsci702app.Tools.DBHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -52,6 +60,30 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        //rb delete and create database
+        //SQLiteDatabase db;
+        ///this.deleteDatabase("WordBank.db");
+       //db = new DBHelper(this).getWritableDatabase();
+
+        //rb database all rows query
+        //new DBHelper(this).onDeleteAllRows();
+
+       //rb database insert query
+        //new DBHelper(this).onInsert();
+
+
+        //rb read from database
+        Cursor cursor = new DBHelper(this).alldata();
+        if (cursor.getCount() == 0){
+            Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            while (cursor.moveToNext()){
+                Toast.makeText(getApplicationContext(), "Sentence" +cursor.getString(1), Toast.LENGTH_SHORT).show();
+                }
+        }
+
 
         //Getting all components specified in layout files
         nextLevelLayout = findViewById(R.id.nextLevelLayout);
@@ -114,6 +146,8 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) { }
+
+
         });
 
     }
