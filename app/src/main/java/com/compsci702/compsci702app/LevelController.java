@@ -16,7 +16,6 @@ public class LevelController {
             case LEVEL_2:
                 return new Level3();
             case LEVEL_3:
-                System.out.println("returning null");
                 return null;
         }
         return null;

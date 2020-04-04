@@ -1,22 +1,27 @@
 package com.compsci702.compsci702app.Level;
 
-import com.compsci702.compsci702app.Tools.WordList;
+import com.compsci702.compsci702app.Tools.Scrambler;
+import com.compsci702.compsci702app.Tools.SentenceList;
 
 public abstract class Level {
 
     protected String levelText;
     protected String levelDescription;
-    protected String congratulationsText = "Level Passed!";
     protected String levelFinishedDescription;
+    protected LevelType levelType;
+    protected SentenceList sentenceList;
+    protected int levelNumber;
+
     protected int wordCountGoal;
     protected int currentWordCount;
-    protected LevelType levelType;
-
-    protected WordList wordList;
+    protected String targetSentence;
+    protected String congratulationsText = "Level Passed!";
+    protected Scrambler scrambler = new Scrambler();
 
     public Level(){
         currentWordCount = 0;
-        wordList = new WordList(wordCountGoal);
+        sentenceList = new SentenceList(wordCountGoal);
+        targetSentence = sentenceList.getWord(currentWordCount);
     }
 
     public String getLevelText(){ return levelText; }
@@ -31,15 +36,30 @@ public abstract class Level {
 
     public int getCurrentWordCount(){ return currentWordCount; }
 
+    public int getLevelNumber(){ return levelNumber; }
+
     public String getProgressIndicatorText(){ return String.format("%02d / %02d",currentWordCount ,wordCountGoal); }
 
-    public String getNextWord(){ return wordList.getWord(currentWordCount); }
+    public String getNextSentence(){
+        
+        targetSentence = sentenceList.getWord(currentWordCount);
+        return scrambler.scrambleSentence(targetSentence, this);
+    }
 
     public LevelType getLevelType() { return levelType; }
 
     public boolean levelFinished(){ return currentWordCount == wordCountGoal; }
 
-    public void wordMatched(){ currentWordCount ++; }
+    public String getTargetSentence(){ return targetSentence; }
+
+    public boolean checkMatch(String input){
+
+        if (input.equals(targetSentence)){
+            currentWordCount ++;
+            return true;
+        }
+        return false;
+    }
 }
 
 

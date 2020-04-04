@@ -7,7 +7,7 @@ import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
@@ -23,6 +23,7 @@ import com.compsci702.compsci702app.Level.Level1;
 import com.compsci702.compsci702app.Level.LevelType;
 import com.compsci702.compsci702app.LevelController;
 import com.compsci702.compsci702app.R;
+import com.compsci702.compsci702app.Tools.SentenceProcessor;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -47,37 +48,23 @@ public class GameActivity extends AppCompatActivity {
 
     private SoundPool soundPool;
     private int dingSound;
+    private SentenceProcessor sentenceProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //Getting all components specified in layout files
-        nextLevelLayout = findViewById(R.id.nextLevelLayout);
-        levelFinishedLayout = findViewById(R.id.levelFinishedLayout);
-        mainGameLayout = findViewById(R.id.mainGameLayout);
-
-        levelText = findViewById(R.id.levelText);
-        levelDescription = findViewById(R.id.levelDescription);
-        levelFinishedText = findViewById(R.id.levelFinishedText);
-        levelFinishedDescription = findViewById(R.id.levelFinishedDescription);
-
-        inputText = findViewById(R.id.inputText);
-        mainText = findViewById(R.id.mainText);
-        progressText = findViewById(R.id.progressText);
-        timerText = findViewById(R.id.timerText);
-        levelDescription = findViewById(R.id.levelDescription);
-
-        progressBar = findViewById(R.id.progressBar);
+        getComponents();
 
         levelController = new LevelController();
         currentLevel = new Level1();
-        mainText.setText(currentLevel.getNextWord());
+        mainText.setText(currentLevel.getNextSentence());
 
         //Set up sound player
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         dingSound = soundPool.load(this, R.raw.ding, 1);
+        sentenceProcessor = new SentenceProcessor(this);
 
         //Add listener to user input field to watch for changes
         inputText.addTextChangedListener(new TextWatcher() {
@@ -88,15 +75,12 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                String targetText = mainText.getText().toString();
-
-                SpannableString spannableString = new SpannableString(targetText);
-                mainText.setText(getColourMatchedString(spannableString, s.toString()));
+                mainText.setText(sentenceProcessor.getColourMatchedString(s.toString(), mainText.getText().toString(),
+                        currentLevel.getTargetSentence()));
 
                 //If the word the user entered equals the target word increase count by one for the Level and
                 //play sound.
-                if(s.toString().equals(spannableString.toString())){
-                    currentLevel.wordMatched();
+                if(currentLevel.checkMatch(s.toString())){
                     soundPool.play(dingSound, 1, 1, 0, 0, 1);
 
                     progressBar.setProgress(currentLevel.getCurrentWordCount());
@@ -105,8 +89,8 @@ public class GameActivity extends AppCompatActivity {
                     if(currentLevel.levelFinished()){
                         setLevelFinishedLayout();
                     } else {
-                        //If the level isn't finished display the next word in the list.
-                        mainText.setText(currentLevel.getNextWord());
+                        //If the level isn't finished display the next sentence in the list.
+                        mainText.setText(currentLevel.getNextSentence());
                         inputText.setText("");
                     }
                 }
@@ -123,8 +107,8 @@ public class GameActivity extends AppCompatActivity {
         levelFinishedLayout.setVisibility(View.GONE);
         mainGameLayout.setVisibility(View.VISIBLE);
 
+        mainText.setText(currentLevel.getNextSentence());
         inputText.setText("");
-        mainText.setText(currentLevel.getNextWord());
 
         progressText.setText(currentLevel.getProgressIndicatorText());
         progressBar.setMax(currentLevel.getWordCountGoal());
@@ -133,6 +117,8 @@ public class GameActivity extends AppCompatActivity {
         showKeyboard(inputText);
     }
 
+    //Player clicks next level button from the level passed screen. Leads player to
+    //next level information screen.
     public void nextLevelInfoClicked(View view){
         nextLevelLayout.setVisibility(View.VISIBLE);
         levelFinishedLayout.setVisibility(View.GONE);
@@ -142,16 +128,15 @@ public class GameActivity extends AppCompatActivity {
         this.levelDescription.setText(currentLevel.getLevelDescription());
     }
 
+    //Shown when user completes the level. Shows level passed text.
     private void setLevelFinishedLayout(){
         hideKeyboard();
         mainGameLayout.setVisibility(View.GONE);
         nextLevelLayout.setVisibility(View.GONE);
         levelFinishedLayout.setVisibility(View.VISIBLE);
 
-        System.out.println("currentType " + currentLevel.getLevelType());
-
+        //If this is the last level, load the game finished class.
         if (currentLevel.getLevelType() == LevelType.LEVEL_3) {
-            System.out.println("game finished");
             Intent intent = new Intent(this,GameFinishedActivity.class);
             Bundle mBundle = new Bundle();
             mBundle.putBoolean("success", true);
@@ -175,23 +160,23 @@ public class GameActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
     }
 
-    //Change colour of target word in relation to what the user has currently written.
-    private SpannableString getColourMatchedString(SpannableString targetText, String currentText){
+    //Get all the necessary components from the layout file.
+    private void getComponents(){
+        nextLevelLayout = findViewById(R.id.nextLevelLayout);
+        levelFinishedLayout = findViewById(R.id.levelFinishedLayout);
+        mainGameLayout = findViewById(R.id.mainGameLayout);
 
-        for(int i=0; i< targetText.length(); i++){
-            if(i > currentText.length()-1){
-                ForegroundColorSpan fcsgrey = new ForegroundColorSpan(getResources().getColor(R.color.darkGrey));
-                targetText.setSpan(fcsgrey ,i ,i+1 ,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        levelText = findViewById(R.id.levelText);
+        levelDescription = findViewById(R.id.levelDescription);
+        levelFinishedText = findViewById(R.id.levelFinishedText);
+        levelFinishedDescription = findViewById(R.id.levelFinishedDescription);
 
-            }else if(currentText.charAt(i) == targetText.charAt(i)){
-                ForegroundColorSpan fcsgreen = new ForegroundColorSpan(getResources().getColor(R.color.green));
-                targetText.setSpan(fcsgreen ,i ,i+1 ,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        inputText = findViewById(R.id.inputText);
+        mainText = findViewById(R.id.mainText);
+        progressText = findViewById(R.id.progressText);
+        timerText = findViewById(R.id.timerText);
+        levelDescription = findViewById(R.id.levelDescription);
 
-            }else{
-                ForegroundColorSpan fcsred = new ForegroundColorSpan(getResources().getColor(R.color.red));
-                targetText.setSpan(fcsred ,i ,i+1 ,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-            }
-        }
-        return targetText;
+        progressBar = findViewById(R.id.progressBar);
     }
 }

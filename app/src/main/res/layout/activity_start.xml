@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         app:fontFamily="@font/circularbold"
-        android:text="Speed Typer"
+        android:text="Speed Scramble"
         android:textColor="@color/darkGrey"/>
 
     <Button

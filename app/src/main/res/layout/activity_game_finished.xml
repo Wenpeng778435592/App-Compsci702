@@ -41,7 +41,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="20sp"
             app:fontFamily="@font/circularbold"
-            android:layout_marginTop="60dp"/>
+            android:layout_marginTop="60dp"
+            android:onClick="homeClicked"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="20sp"
             app:fontFamily="@font/circularbold"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="25dp"
+            android:onClick="replayClicked"/>
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +63,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:id="@+id/gameLostLayout">
+        android:id="@+id/gameLostLayout"
+        android:background="@color/red">
 
         <TextView
             android:layout_width="wrap_content"
