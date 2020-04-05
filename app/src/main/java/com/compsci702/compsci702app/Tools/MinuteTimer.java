@@ -1,5 +1,7 @@
 package com.compsci702.compsci702app.Tools;
 
+//rb
+import android.os.CountDownTimer;
 import android.widget.TextView;
 
 public class MinuteTimer {
@@ -15,5 +17,15 @@ public class MinuteTimer {
     //textField with the new time every second (01:00, 00:59, etc)
     public void startTimer(){
 
+        //rb start one minute timer
+        new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                timerText.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+            public void onFinish() {
+                System.out.println(timerText.getText().toString());
+                timerText.setText("done!");
+            }
+        }.start();
     }
 }

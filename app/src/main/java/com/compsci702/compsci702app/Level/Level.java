@@ -1,5 +1,7 @@
 package com.compsci702.compsci702app.Level;
 
+import android.content.Context;
+
 import com.compsci702.compsci702app.Tools.Scrambler;
 import com.compsci702.compsci702app.Tools.SentenceList;
 
@@ -18,9 +20,9 @@ public abstract class Level {
     protected String congratulationsText = "Level Passed!";
     protected Scrambler scrambler = new Scrambler();
 
-    public Level(){
+    public Level(Context context){
         currentWordCount = 0;
-        sentenceList = new SentenceList(wordCountGoal);
+        sentenceList = new SentenceList(wordCountGoal, context);
         targetSentence = sentenceList.getWord(currentWordCount);
     }
 
