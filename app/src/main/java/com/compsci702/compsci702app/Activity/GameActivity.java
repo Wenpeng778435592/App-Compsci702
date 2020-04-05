@@ -74,15 +74,15 @@ public class GameActivity extends AppCompatActivity {
 
 
         //rb read from database
-        Cursor cursor = new DBHelper(this).alldata();
-        if (cursor.getCount() == 0){
-            Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            while (cursor.moveToNext()){
-                Toast.makeText(getApplicationContext(), "Sentence" +cursor.getString(1), Toast.LENGTH_SHORT).show();
-                }
-        }
+//        Cursor cursor = new DBHelper(this).alldata();
+//        if (cursor.getCount() == 0){
+//            Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//            while (cursor.moveToNext()){
+//                Toast.makeText(getApplicationContext(), "Sentence" +cursor.getString(1), Toast.LENGTH_SHORT).show();
+//                }
+//        }
 
 
         //Getting all components specified in layout files

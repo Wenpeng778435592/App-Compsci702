@@ -17,6 +17,7 @@ public class WordList {
     public WordList( int listLength){
         this.listLength = listLength;
         getWordListFromDatabase(this.listLength);
+
     }
 
     private ArrayList<String> getWordListFromDatabase(int listLength){
@@ -28,12 +29,13 @@ public class WordList {
         }
         else {
             while (cursor.getCount() < (listLength + 1) && cursor.moveToNext()){
-              wordList.add(cursor.getString(1));
+                wordList.add(cursor.getString(1));
             }
         }
         //Emily
-        //wordList.add("Word");
-        //wordList.add("Jumper");
+//        wordList.add("Word");
+//        wordList.add("Jumper");
+
         return wordList;
     }
 
