@@ -142,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fontFamily="@font/circularbook"
-            android:text="Type 64 words within a minute to pass this round"
+            android:text=""
             android:textSize="20sp"
             android:textColor="@color/darkGrey"
             android:layout_marginTop="35dp"

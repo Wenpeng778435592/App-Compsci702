@@ -22,25 +22,21 @@ public class SentenceList {
         this.listLength = listLength;
         this.context = context;
         wordList = getWordListFromDatabase(this.listLength);
-        System.out.println(wordList.size());
     }
 
     private ArrayList<String> getWordListFromDatabase(int listLength){
 
-        context.deleteDatabase("WordBank.db");
+        //context.deleteDatabase("WordBank.db");
         db = new DBHelper(context).getWritableDatabase();
         ArrayList<String> wordList = new ArrayList<>();
 
         //Instead of getting all data, only get listed number
-//        Cursor cursor = new DBHelper(context).alldata();
-//        if (cursor.moveToFirst()){
-//            while (cursor.moveToNext()){
-//                System.out.println("adding " + cursor.getString(1));
-//               wordList.add(cursor.getString(1));
-//            }
-//        }
-        wordList.add("It is sunny outside");
-        wordList.add("It is not sunny outside");
+        Cursor cursor = new DBHelper(context).getDataFromDatabase(listLength);
+        while (cursor.moveToNext()){
+           wordList.add(cursor.getString(1));
+        }
+        //wordList.add("It is sunny outside");
+        //wordList.add("It is not sunny outside");
 
         return wordList;
 

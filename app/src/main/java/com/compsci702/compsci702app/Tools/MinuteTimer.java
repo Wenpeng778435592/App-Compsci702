@@ -8,24 +8,27 @@ public class MinuteTimer {
 
     //This is the text field in the UI that shows the time
     TextView timerText;
+    CountDownTimer timer;
 
     public MinuteTimer(TextView timerText){
         this.timerText = timerText;
     }
 
-    //Starts the timer. Counts down from one minute (01:00). Sets the
-    //textField with the new time every second (01:00, 00:59, etc)
     public void startTimer(){
 
         //rb start one minute timer
-        new CountDownTimer(60000, 1000) {
+        timer = new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
                 timerText.setText(String.valueOf(millisUntilFinished / 1000));
             }
             public void onFinish() {
-                System.out.println(timerText.getText().toString());
-                timerText.setText("done!");
+                timerText.setText("0");
             }
         }.start();
+    }
+
+    public void stopTimer(){
+        timer.cancel();
+        timerText.setText("59");
     }
 }

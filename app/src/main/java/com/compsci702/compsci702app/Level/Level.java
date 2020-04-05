@@ -2,6 +2,7 @@ package com.compsci702.compsci702app.Level;
 
 import android.content.Context;
 
+import com.compsci702.compsci702app.Tools.MinuteTimer;
 import com.compsci702.compsci702app.Tools.Scrambler;
 import com.compsci702.compsci702app.Tools.SentenceList;
 
@@ -22,8 +23,6 @@ public abstract class Level {
 
     public Level(Context context){
         currentWordCount = 0;
-        sentenceList = new SentenceList(wordCountGoal, context);
-        targetSentence = sentenceList.getWord(currentWordCount);
     }
 
     public String getLevelText(){ return levelText; }
@@ -46,6 +45,10 @@ public abstract class Level {
         
         targetSentence = sentenceList.getWord(currentWordCount);
         return scrambler.scrambleSentence(targetSentence, this);
+    }
+
+    public void startTimer(){
+
     }
 
     public LevelType getLevelType() { return levelType; }

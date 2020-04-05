@@ -55,7 +55,6 @@ public class GameActivity extends AppCompatActivity {
     private SoundPool soundPool;
     private int dingSound;
     private SentenceProcessor sentenceProcessor;
-    private boolean gameWon = false;
     private MinuteTimer timer;
 
     @Override
@@ -64,34 +63,24 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         //rb delete and create database
-        SQLiteDatabase db;
-        this.deleteDatabase("WordBank.db");
-        db = new DBHelper(this).getWritableDatabase();
+        //SQLiteDatabase db;
+        //this.deleteDatabase("WordBank.db");
+        //db = new DBHelper(this).getWritableDatabase();
 
         //rb database all rows query
-        //new DBHelper(this).onDeleteAllRows();
+        new DBHelper(this).onDeleteAllRows();
 
         //rb database insert query
         new DBHelper(this).onInsert();
-
-
-//        //rb read from database
-        Cursor cursor = new DBHelper(this).alldata();
-        if (cursor.getCount() == 0){
-            Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            while (cursor.moveToNext()){
-                Toast.makeText(getApplicationContext(), "Sentence" +cursor.getString(1), Toast.LENGTH_SHORT).show();
-            }
-        }
 
         getComponents();
 
         levelController = new LevelController();
         currentLevel = new Level1(this);
         timer = new MinuteTimer(timerText);
-        mainText.setText(currentLevel.getNextSentence());
+        this.mainText.setText(currentLevel.getNextSentence());
+        this.levelText.setText(currentLevel.getLevelText());
+        this.levelDescription.setText(currentLevel.getLevelDescription());
 
         //Set up sound player
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -143,9 +132,8 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                System.out.println("s " + s);
                 if(s.toString().equals("0")) {
-                    System.out.println("finished");
+                    timer.stopTimer();
                     Intent intent = new Intent(GameActivity.this, GameFinishedActivity.class);
                     Bundle mBundle = new Bundle();
                     mBundle.putBoolean("success", false);
@@ -162,13 +150,14 @@ public class GameActivity extends AppCompatActivity {
         levelFinishedLayout.setVisibility(View.GONE);
         mainGameLayout.setVisibility(View.VISIBLE);
 
+        timer.startTimer();
+
         mainText.setText(currentLevel.getNextSentence());
         inputText.setText("");
 
         progressText.setText(currentLevel.getProgressIndicatorText());
         progressBar.setMax(currentLevel.getWordCountGoal());
         progressBar.setProgress(currentLevel.getCurrentWordCount());
-        timer.startTimer();
 
         showKeyboard(inputText);
     }
@@ -190,6 +179,8 @@ public class GameActivity extends AppCompatActivity {
         mainGameLayout.setVisibility(View.GONE);
         nextLevelLayout.setVisibility(View.GONE);
         levelFinishedLayout.setVisibility(View.VISIBLE);
+
+        timer.stopTimer();
 
         //If this is the last level, load the game finished class.
         if (currentLevel.getLevelType() == LevelType.LEVEL_3) {

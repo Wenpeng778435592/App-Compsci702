@@ -45,9 +45,59 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         List<String> list;
         list = new ArrayList<String>();
-        list.add("It is not sunny outside");
-        list.add("It is very cold inside");
-        list.add("It is not very cold inside");
+        list.add("An apple a day keeps the doctor away");
+        list.add("Better late then never");
+        list.add("What comes around goes around");
+        list.add("Laughter is the best medicine");
+        list.add("Run like the wind");
+        list.add("A blessing in disguise");
+        list.add("The grass is greener on the other side");
+        list.add("Once in a blue moon");
+        list.add("Between a rock and a hard place");
+        list.add("Bobs your uncle");
+        list.add("Bury your head in the sand");
+        list.add("Cheap as chips");
+        list.add("Bobs your uncle");
+        list.add("Bury your head in the sand");
+        list.add("Getting cold feet");
+        list.add("Curiosity killed the cat");
+        list.add("Don't put all your eggs in one basket");
+        list.add("Desperate times call for desperate measures");
+        list.add("Head over heels in love");
+        list.add("Hit the nail on the head");
+        list.add("Ignorance is bliss");
+        list.add("Kill two birds with one stone");
+        list.add("Leave no stone unturned");
+        list.add("No pain no gain");
+        list.add("On the straight and narrow");
+        list.add("Pulling my leg");
+        list.add("Sitting on the fence");
+        list.add("Speaking of the devil");
+        list.add("Take it with a pinch of salt");
+        list.add("Time flies when you are having fun");
+        list.add("Don't judge a book by its cover");
+        list.add("Seeing eye to eye");
+        list.add("The cats out of the bag");
+        list.add("Looking like a million dollars");
+        list.add("Give the benefit of the doubt");
+        list.add("Go back to the drawing board");
+        list.add("Go the extra mile");
+        list.add("Chip on your shoulder");
+        list.add("Cost an arm and a leg");
+        list.add("Cut a long story short");
+        list.add("Don't put all your eggs in one basket");
+        list.add("Don't run before you can walk");
+        list.add("Take it one step at a time");
+        list.add("Bite the bullet");
+        list.add("Bite off more than you can chew");
+        list.add("Bark up the wrong tree");
+        list.add("Don't beat around the bush");
+        list.add("Actions speak louder than words");
+        list.add("Add insult to injury");
+        list.add("Adding fuel to the fire");
+        list.add("A stones throw away");
+        list.add("A sandwich short of a picnic");
+        list.add("A blessing in disguise");
         int n = 0;
         for (int i = 0; i < list.size(); i++) {
             cv.put("Sentence", list.get(n));
@@ -60,6 +110,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor alldata(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from Words", null);
+        return cursor;
+    }
+
+    public Cursor getDataFromDatabase(int listLength){
+        SQLiteDatabase db = this.getReadableDatabase();
+        System.out.println(Integer.toString(listLength));
+        Cursor cursor = db.rawQuery("SELECT * FROM Words WHERE id IN (SELECT id FROM Words ORDER BY RANDOM() LIMIT ? )",
+                new String[]{Integer.toString(listLength)});
         return cursor;
     }
 
