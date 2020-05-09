@@ -160,7 +160,7 @@
             android:onClick="nextLevelStartClicked"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:text="Start"
+            android:text="U3RhcnQ="
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/darkGrey"
             android:textSize="20sp" />

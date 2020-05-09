@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.compsci702.compsci702app.Activity.outputProcess;
 import com.compsci702.compsci702app.Tools.DBHelper;
 
 import java.lang.reflect.Array;
@@ -33,7 +34,16 @@ public class SentenceList {
         //Instead of getting all data, only get listed number
         Cursor cursor = new DBHelper(context).getDataFromDatabase(listLength);
         while (cursor.moveToNext()){
-           wordList.add(cursor.getString(1));
+
+            //Decrypt fn
+        outputProcess op = new outputProcess();
+        String decryptedPlainText;
+        //decryptedPlainText = op.decrypt(byteCipherText);
+        decryptedPlainText = op.decrypt(cursor.getBlob(1));
+        //System.out.println("decryptPlainText " + decryptedPlainText);
+
+//         wordList.add(cursor.getString(1));
+           wordList.add(decryptedPlainText);
         }
         //wordList.add("It is sunny outside");
         //wordList.add("It is not sunny outside");

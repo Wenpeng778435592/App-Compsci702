@@ -1,26 +1,22 @@
 package com.compsci702.compsci702app.Activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.compsci702.compsci702app.Level.Level;
 import com.compsci702.compsci702app.Level.Level1;
@@ -30,6 +26,9 @@ import com.compsci702.compsci702app.R;
 import com.compsci702.compsci702app.Tools.DBHelper;
 import com.compsci702.compsci702app.Tools.MinuteTimer;
 import com.compsci702.compsci702app.Tools.SentenceProcessor;
+
+import java.io.UnsupportedEncodingException;
+
 
 public class GameActivity extends AppCompatActivity {
 
@@ -44,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     TextView progressText;
     TextView levelFinishedText;
     TextView levelFinishedDescription;
+    Button startButton;
 
     EditText inputText;
 
@@ -57,21 +57,41 @@ public class GameActivity extends AppCompatActivity {
     private SentenceProcessor sentenceProcessor;
     private MinuteTimer timer;
 
+    public static String input1b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        //rb
+        input1b = this.getString(R.string.ring);
+
+
+        //rb
+//        String plainText = "Start";
+//        //Encrypt fn comment after encryption
+//        inputProcess ip = new inputProcess();
+//        byte[] byteCipherText;
+//        byteCipherText = ip.encrypt(plainText);
+//        System.out.println("byteCipherText " + byteCipherText);
+
+        //Decrypt fn
+//        outputProcess op = new outputProcess();
+//        String decryptedPlainText;
+//        decryptedPlainText = op.decrypt(byteCipherText);
+//        System.out.println("decryptPlainText " + decryptedPlainText);
+
+
         //rb delete and create database
-        //SQLiteDatabase db;
-        //this.deleteDatabase("WordBank.db");
-        //db = new DBHelper(this).getWritableDatabase();
+//        this.deleteDatabase("WordBank.db");
+//        SQLiteDatabase db = new DBHelper(this).getWritableDatabase();
 
         //rb database all rows query
-        new DBHelper(this).onDeleteAllRows();
+        //new DBHelper(this).onDeleteAllRows();
 
         //rb database insert query
-        new DBHelper(this).onInsert();
+//        new DBHelper(this).onInsert();
 
         getComponents();
 
@@ -223,6 +243,34 @@ public class GameActivity extends AppCompatActivity {
         progressText = findViewById(R.id.progressText);
         timerText = findViewById(R.id.timerText);
         levelDescription = findViewById(R.id.levelDescription);
+
+        startButton = findViewById(R.id.levelStartButton);
+
+        //rb
+        //String plainText = (String) startButton.getText();
+
+        String plainText = "Start";
+        //b64 encode;
+        byte[] byteText= new byte[0];
+        try {
+            byteText = plainText.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String b64Text = Base64.encodeToString(byteText, Base64.DEFAULT);
+        System.out.println("b64Text " + b64Text);
+
+        //b64 decode
+//        String b64Text = (String) startButton.getText();
+//        String decryptB64Text = null;
+//        byte[] decryptB64Byte = Base64.decode(b64Text, Base64.DEFAULT);
+//        try {
+//            decryptB64Text = new String(decryptB64Byte, "UTF-8");
+//            //System.out.println("decryptB64 " + decryptB64Text);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        startButton.setText(decryptB64Text);
 
         progressBar = findViewById(R.id.progressBar);
     }
