@@ -6,6 +6,9 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import com.compsci702.compsci702app.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SentenceProcessor {
 
     Context context;
@@ -19,7 +22,6 @@ public class SentenceProcessor {
         SpannableStringBuilder scrambledSpannableString = new SpannableStringBuilder(getNewDisplayString(currentText,scrambledText,targetText));
 
         int mistakeIndex = getFirstMistake(currentText, targetText);
-
         if(mistakeIndex != -1){
 
             ForegroundColorSpan fcsgreen = new ForegroundColorSpan(context.getResources().getColor(R.color.green));
@@ -83,5 +85,39 @@ public class SentenceProcessor {
             }
         }
         return mistakeIndex;
+    }
+
+    private int getFirstMistakeClone(String currentText, String targetText){
+        int mistakeIndex = -1;
+        boolean mistakeFound = false;
+        int i = 0;
+        while (!mistakeFound){
+            if(i >= currentText.length()){
+                break;
+            }
+            if(targetText.charAt(i) != currentText.charAt(i)){
+                mistakeIndex = i;
+                mistakeFound = true;
+            }
+            i++;
+        }
+        return mistakeIndex;
+    }
+
+    private int getFirstMistakeClone2(String currentText, String targetText){
+        String[] currentTextArray = currentText.split("");
+        String[] targetTextArray = targetText.split("");
+
+        ArrayList<String> listCurrent = new ArrayList<String>(Arrays.asList(currentTextArray));
+        ArrayList<String> listTarget = new ArrayList<String>(Arrays.asList(targetTextArray));
+        int i = 0;
+
+        for(String s : listCurrent){
+            if (!s.equals(listTarget.get(i))){
+                return i - 1;
+            }
+            i++;
+        }
+        return -1;
     }
 }
