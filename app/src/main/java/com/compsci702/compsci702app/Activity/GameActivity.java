@@ -14,6 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -30,6 +31,8 @@ import com.compsci702.compsci702app.R;
 import com.compsci702.compsci702app.Tools.DBHelper;
 import com.compsci702.compsci702app.Tools.MinuteTimer;
 import com.compsci702.compsci702app.Tools.SentenceProcessor;
+
+import java.io.UnsupportedEncodingException;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -57,6 +60,8 @@ public class GameActivity extends AppCompatActivity {
     private SentenceProcessor sentenceProcessor;
     private MinuteTimer timer;
 
+    public static String input1b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,7 @@ public class GameActivity extends AppCompatActivity {
         //db = new DBHelper(this).getWritableDatabase();
 
         //rb database all rows query
-        new DBHelper(this).onDeleteAllRows();
+        //new DBHelper(this).onDeleteAllRows();
 
         //rb database insert query
         new DBHelper(this).onInsert();
@@ -79,13 +84,15 @@ public class GameActivity extends AppCompatActivity {
         currentLevel = new Level1(this);
         timer = new MinuteTimer(timerText);
         this.mainText.setText(currentLevel.getNextSentence());
-        this.levelText.setText(currentLevel.getLevelText());
-        this.levelDescription.setText(currentLevel.getLevelDescription());
+        this.levelText.setText(decrypt(currentLevel.getLevelText()));
+        this.levelDescription.setText(decrypt(currentLevel.getLevelDescription()));
 
         //Set up sound player
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         dingSound = soundPool.load(this, R.raw.ding, 1);
         sentenceProcessor = new SentenceProcessor(this);
+
+        input1b = this.getString(R.string.ring);
 
         //Add listener to user input field to watch for changes
         inputText.addTextChangedListener(new TextWatcher() {
@@ -191,8 +198,8 @@ public class GameActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             currentLevel = levelController.getNextLevel(currentLevel, this);
-            levelFinishedText.setText(currentLevel.getCongratulationsText());
-            levelFinishedDescription.setText(currentLevel.getLevelFinishedDescription());
+            this.levelText.setText(decrypt(currentLevel.getCongratulationsText()));
+            this.levelDescription.setText(decrypt(currentLevel.getLevelFinishedDescription()));
         }
     }
 
@@ -225,5 +232,17 @@ public class GameActivity extends AppCompatActivity {
         levelDescription = findViewById(R.id.levelDescription);
 
         progressBar = findViewById(R.id.progressBar);
+    }
+
+    private String decrypt(String string){
+        String decryptB64Text = null;
+        byte[] decryptB64Byte = Base64.decode(string, Base64.DEFAULT);
+        try {
+            decryptB64Text = new String(decryptB64Byte, "UTF-8");
+            //System.out.println("decryptB64 " + decryptB64Text);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decryptB64Text;
     }
 }

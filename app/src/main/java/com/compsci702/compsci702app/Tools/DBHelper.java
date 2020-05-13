@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.compsci702.compsci702app.Activity.InputProcess;
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,15 +33,19 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //rb
-        db.execSQL("create table Words(Id Integer Primary Key Autoincrement, Sentence text)");
+        //db.execSQL("create table Words(Id Integer Primary Key Autoincrement, Sentence text)");
+        db.execSQL("create table Words(Id Integer Primary Key Autoincrement, Sentence BLOB)");
+
     }
 
     //rb
-    public void onDeleteAllRows()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from "+ "Words");
-    }
+//    public void onDeleteAllRows()
+//    {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.execSQL("delete from "+ "Words");
+//    }
+
+
 
     //rb
     public void onInsert() {
@@ -98,9 +106,16 @@ public class DBHelper extends SQLiteOpenHelper {
         list.add("A stones throw away");
         list.add("A sandwich short of a picnic");
         list.add("A blessing in disguise");
+
         int n = 0;
         for (int i = 0; i < list.size(); i++) {
-            cv.put("Sentence", list.get(n));
+            //Encrypt fn comment after encryption
+            InputProcess ip = new InputProcess();
+            byte[] byteCipherText;
+            byteCipherText = ip.encrypt(list.get(n));
+            //System.out.println("byteCipherText " + byteCipherText);
+//          cv.put("Sentence", list.get(n));
+            cv.put("Sentence", byteCipherText);
             db.insert("Words", null, cv);
             n++;
         }
@@ -115,7 +130,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getDataFromDatabase(int listLength){
         SQLiteDatabase db = this.getReadableDatabase();
-        System.out.println(Integer.toString(listLength));
+        //System.out.println(Integer.toString(listLength));
         Cursor cursor = db.rawQuery("SELECT * FROM Words WHERE id IN (SELECT id FROM Words ORDER BY RANDOM() LIMIT ? )",
                 new String[]{Integer.toString(listLength)});
         return cursor;

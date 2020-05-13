@@ -18,7 +18,7 @@ public abstract class Level {
     protected int wordCountGoal;
     protected int currentWordCount;
     protected String targetSentence;
-    protected String congratulationsText = "Level Passed!";
+    protected String congratulationsText = "TGV2ZWwgUGFzc2VkIQ==";
     protected Scrambler scrambler = new Scrambler();
 
     public Level(Context context){

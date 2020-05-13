@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.compsci702.compsci702app.Activity.OutputProcess;
 import com.compsci702.compsci702app.Tools.DBHelper;
 
 import java.lang.reflect.Array;
@@ -34,21 +35,15 @@ public class SentenceList {
         Cursor cursor = new DBHelper(context).getDataFromDatabase(listLength);
         while (cursor.moveToNext()){
            wordList.add(cursor.getString(1));
-        }
-        return wordList;
 
-    }
+            OutputProcess op = new OutputProcess();
+            String decryptedPlainText;
+            //decryptedPlainText = op.decrypt(byteCipherText);
+            decryptedPlainText = op.decrypt(cursor.getBlob(1));
+            //System.out.println("decryptPlainText " + decryptedPlainText);
 
-    private ArrayList<String> getWordListFromDatabaseClone1(int listLength){
-
-        //context.deleteDatabase("WordBank.db");
-        db = new DBHelper(context).getWritableDatabase();
-        ArrayList<String> wordList = new ArrayList<>();
-
-        //Instead of getting all data, only get listed number
-        Cursor cursor = new DBHelper(context).getDataFromDatabase(listLength);
-        while (cursor.moveToNext()){
-            wordList.add(cursor.getString(1));
+//         wordList.add(cursor.getString(1));
+            wordList.add(decryptedPlainText);
         }
         return wordList;
 
