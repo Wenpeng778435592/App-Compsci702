@@ -22,6 +22,7 @@ public class OutputProcess {
         Cipher cipher = null;
 //        MainActivity ma = new MainActivity();
         String input1b = GameActivity.input1b;
+        //System.out.println("input1b " + input1b);
         try {
             cipher = Cipher.getInstance("AES");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
@@ -35,6 +36,7 @@ public class OutputProcess {
         }
         catch (Exception e) {
             fence =  "" + input1 + input1b + "U" + input2 + "Q" + "=" + "";
+            System.out.println("fence" + fence);
         }
 
         byte[] encodedKey = Base64.decode(fence, Base64.DEFAULT);

@@ -66,6 +66,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        input1b = this.getString(R.string.ring);
 
         //rb delete and create database
         //SQLiteDatabase db;
@@ -76,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
         //new DBHelper(this).onDeleteAllRows();
 
         //rb database insert query
-        new DBHelper(this).onInsert();
+        //new DBHelper(this).onInsert();
 
         getComponents();
 
@@ -92,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
         dingSound = soundPool.load(this, R.raw.ding, 1);
         sentenceProcessor = new SentenceProcessor(this);
 
-        input1b = this.getString(R.string.ring);
+
 
         //Add listener to user input field to watch for changes
         inputText.addTextChangedListener(new TextWatcher() {

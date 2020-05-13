@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.compsci702.compsci702app.Activity.OutputProcess;
 import com.compsci702.compsci702app.Tools.DBHelper;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -19,11 +20,17 @@ public class SentenceList {
     private Context context;
     private SQLiteDatabase db;
 
+
     public SentenceList(int listLength, Context context){
         this.listLength = listLength;
         this.context = context;
         wordList = getWordListFromDatabase(this.listLength);
     }
+
+
+
+
+
 
     private ArrayList<String> getWordListFromDatabase(int listLength){
 
@@ -34,7 +41,7 @@ public class SentenceList {
         //Instead of getting all data, only get listed number
         Cursor cursor = new DBHelper(context).getDataFromDatabase(listLength);
         while (cursor.moveToNext()){
-           wordList.add(cursor.getString(1));
+           //wordList.add(cursor.getString(1));
 
             OutputProcess op = new OutputProcess();
             String decryptedPlainText;
