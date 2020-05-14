@@ -62,17 +62,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //rb delete and create database
-        //SQLiteDatabase db;
-        //this.deleteDatabase("WordBank.db");
-        //db = new DBHelper(this).getWritableDatabase();
-
-        //rb database all rows query
-        new DBHelper(this).onDeleteAllRows();
-
-        //rb database insert query
-        new DBHelper(this).onInsert();
-
         getComponents();
 
         levelController = new LevelController();

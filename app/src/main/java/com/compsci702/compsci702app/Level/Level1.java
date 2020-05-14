@@ -10,8 +10,9 @@ public class Level1 extends Level{
         super(context);
         this.levelType = LevelType.LEVEL_1;
         this.levelText = "Level 1 of 3";
-        this.levelDescription = "Unscramble 10 sentences within the minute to pass this level";
-        this.wordCountGoal = 10;
+        this.levelDescription = "Unscramble 6 sentences within the minute to pass this level";
+        this.levelFinishedDescription = "One level down, two to go";
+        this.wordCountGoal = 6;
         this.levelNumber = 1;
         sentenceList = new SentenceList(wordCountGoal, context);
         targetSentence = sentenceList.getWord(currentWordCount);
