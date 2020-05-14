@@ -46,9 +46,6 @@ public class DBHelper extends SQLiteOpenHelper {
 //    }
 
 
-
-
-
     //rb
 //    public void onInsert() {
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -108,6 +105,58 @@ public class DBHelper extends SQLiteOpenHelper {
 //        list.add("A stones throw away");
 //        list.add("A sandwich short of a picnic");
 //        list.add("A blessing in disguise");
+//        list.add("Too many cooks spoil The broth");
+//        list.add("It never rains it pours");
+//        list.add("The apple doesn't fall far from the tree");
+//        list.add("A watched pot never boils");
+//        list.add("A bird in the hand is worth two in the bush");
+//        list.add("Absence makes the heart grow fonder");
+//        list.add("A cat has nine lives");
+//        list.add("All good things come to an end");
+//        list.add("Always put your best foot forward");
+//        list.add("A stitch in time saves nine");
+//        list.add("You reap what you sow");
+//        list.add("Beggars can't be choosers");
+//        list.add("The best things in life are free");
+//        list.add("Blood is thicker than water");
+//        list.add("Easy come, easy go");
+//        list.add("Every dog has his day");
+//        list.add("Fortune favours the brave");
+//        list.add("Good things come to those who wait");
+//        list.add("If it ain't broke, don't fix it");
+//        list.add("All good things come to an end");
+//        list.add("It's better to be safe than sorry");
+//        list.add("It's not over till its over");
+//        list.add("Let sleeping dogs lie");
+//        list.add("Lightning never strikes twice");
+//        list.add("Money doesn't grow on trees");
+//        list.add("Necessity is the mother of invention");
+//        list.add("No news is good news");
+//        list.add("The end justifies the means");
+//        list.add("There is not time like the present");
+//        list.add("The squeaky wheel gets the grease");
+//        list.add("Rome wasn't built in a day");
+//        list.add("When in rome, so as the romans do");
+//        list.add("Still waters run deep");
+//        list.add("Time waits for no man");
+//        list.add("Two heads are better than one");
+//        list.add("Two wrongs don't make a right");
+//        list.add("Where there's a will, there's a way");
+//        list.add("Strike while the iron is hot");
+//        list.add("Practice what you preach");
+//        list.add("One man's junk is another man's treasure");
+//        list.add("Out of sight, out of mind");
+//        list.add("Look before you leap");
+//        list.add("Learn to walk before you run");
+//        list.add("It takes two to tango");
+//        list.add("Honesty is the best policy");
+//        list.add("Hope for the best, prepare for the worst");
+//        list.add("Every cloud has a silver lining");
+//        list.add("Don't blow your own trumpet");
+//        list.add("A thing begun is half done");
+//        list.add("A picture is worth a thousand words");
+//        list.add("A bad workman always blames his tools");
+//
 //
 //        int n = 0;
 //        for (int i = 0; i < list.size(); i++) {
@@ -123,12 +172,12 @@ public class DBHelper extends SQLiteOpenHelper {
 //        }
 //    }
 
-    //rb
-    public Cursor alldata(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from Words", null);
-        return cursor;
-    }
+//    //rb
+//    public Cursor alldata(){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("select * from Words", null);
+//        return cursor;
+//    }
 
     public Cursor getDataFromDatabase(int listLength){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -150,7 +199,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) { super.onOpen(db); }
 
     public void createDB(){
-        if(!dbExists()){ copyDBFromResource(); }
+        if(!dbExists()){
+            copyDBFromResource();
+        }
     }
 
     private boolean dbExists(){

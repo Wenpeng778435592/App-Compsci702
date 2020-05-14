@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.compsci702.compsci702app.R;
+import com.compsci702.compsci702app.Tools.DBHelper;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -18,6 +19,8 @@ public class StartActivity extends AppCompatActivity {
     public void startClicked(View view){
         Intent intent = new Intent(this,GameActivity.class);
         startActivity(intent);
+        DBHelper dbHelper = new DBHelper(this);
+        dbHelper.createDB();
     }
 
 }

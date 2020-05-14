@@ -35,7 +35,6 @@ public class SentenceList {
     private ArrayList<String> getWordListFromDatabase(int listLength){
 
         //context.deleteDatabase("WordBank.db");
-        db = new DBHelper(context).getWritableDatabase();
         ArrayList<String> wordList = new ArrayList<>();
 
         //Instead of getting all data, only get listed number

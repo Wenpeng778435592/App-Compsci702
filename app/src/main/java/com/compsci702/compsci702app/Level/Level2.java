@@ -11,6 +11,7 @@ public class Level2 extends Level{
         this.levelType = LevelType.LEVEL_2;
         this.levelText = "TGV2ZWwgMiBvZiAz";
         this.levelDescription = "VW5zY3JhbWJsZSA3IHdvcmRzIHdpdGhpbiB0aGUgbWludXRlIHRvIHBhc3MgdGhpcyBsZXZlbA==";
+        this.levelFinishedDescription = "QW5vdGhlciBsZXZlbCBkb3duLCBvbmUgc3RlcCBjbG9zZXIgdG8gdmljdG9yeQ==";
         this.wordCountGoal = 7;
         this.levelNumber = 2;
         sentenceList = new SentenceList(wordCountGoal, context);

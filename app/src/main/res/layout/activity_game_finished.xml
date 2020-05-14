@@ -16,6 +16,7 @@
         android:id="@+id/gameWonLayout">
 
         <TextView
+            android:id="@+id/congratulationsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40sp"
@@ -24,6 +25,7 @@
             android:textColor="@color/darkGrey"/>
 
         <TextView
+            android:id="@+id/congratulationsDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -67,6 +69,7 @@
         android:background="@color/red">
 
         <TextView
+            android:id="@+id/gameOverText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40sp"
@@ -75,6 +78,7 @@
             android:textColor="@color/darkGrey"/>
 
         <TextView
+            android:id="@+id/gameOverDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"

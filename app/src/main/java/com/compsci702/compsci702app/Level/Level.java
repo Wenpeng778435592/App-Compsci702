@@ -47,10 +47,6 @@ public abstract class Level {
         return scrambler.scrambleSentence(targetSentence, this);
     }
 
-    public void startTimer(){
-
-    }
-
     public LevelType getLevelType() { return levelType; }
 
     public boolean levelFinished(){ return currentWordCount == wordCountGoal; }

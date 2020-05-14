@@ -142,6 +142,7 @@ public class GameActivity extends AppCompatActivity {
 
                 if(s.toString().equals("0")) {
                     timer.stopTimer();
+                    System.out.println("game over timed out");
                     Intent intent = new Intent(GameActivity.this, GameFinishedActivity.class);
                     Bundle mBundle = new Bundle();
                     mBundle.putBoolean("success", false);
@@ -151,6 +152,13 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
     }
 
     public void nextLevelStartClicked(View view){
@@ -177,8 +185,8 @@ public class GameActivity extends AppCompatActivity {
         levelFinishedLayout.setVisibility(View.GONE);
         mainGameLayout.setVisibility(View.GONE);
 
-        this.levelText.setText(currentLevel.getLevelText());
-        this.levelDescription.setText(currentLevel.getLevelDescription());
+        this.levelText.setText(decrypt(currentLevel.getLevelText()));
+        this.levelDescription.setText(decrypt(currentLevel.getLevelDescription()));
     }
 
     //Shown when user completes the level. Shows level passed text.
@@ -198,9 +206,9 @@ public class GameActivity extends AppCompatActivity {
             intent.putExtras(mBundle);
             startActivity(intent);
         }else{
+            this.levelFinishedText.setText(decrypt(currentLevel.getCongratulationsText()));
+            this.levelFinishedDescription.setText(decrypt(currentLevel.getLevelFinishedDescription()));
             currentLevel = levelController.getNextLevel(currentLevel, this);
-            this.levelText.setText(decrypt(currentLevel.getCongratulationsText()));
-            this.levelDescription.setText(decrypt(currentLevel.getLevelFinishedDescription()));
         }
     }
 
@@ -244,6 +252,7 @@ public class GameActivity extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        System.out.println("decoded " + decryptB64Text);
         return decryptB64Text;
     }
 }
