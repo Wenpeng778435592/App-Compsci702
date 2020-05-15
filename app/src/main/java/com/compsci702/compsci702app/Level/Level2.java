@@ -10,9 +10,9 @@ public class Level2 extends Level{
         super(context);
         this.levelType = LevelType.LEVEL_2;
         this.levelText = "TGV2ZWwgMiBvZiAz";
-        this.levelDescription = "VW5zY3JhbWJsZSA3IHdvcmRzIHdpdGhpbiB0aGUgbWludXRlIHRvIHBhc3MgdGhpcyBsZXZlbA==";
+        this.levelDescription = "VW5zY3JhbWJsZSA1IHNlbnRlbmNlcyB3aXRoaW4gdGhlIG1pbnV0ZSB0byBwYXNzIHRoaXMgbGV2ZWw=";
         this.levelFinishedDescription = "QW5vdGhlciBsZXZlbCBkb3duLCBvbmUgc3RlcCBjbG9zZXIgdG8gdmljdG9yeQ==";
-        this.wordCountGoal = 7;
+        this.wordCountGoal = 5;
         this.levelNumber = 2;
         sentenceList = new SentenceList(wordCountGoal, context);
         targetSentence = sentenceList.getWord(currentWordCount);

@@ -68,17 +68,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         input1b = this.getString(R.string.ring);
 
-        //rb delete and create database
-        //SQLiteDatabase db;
-        //this.deleteDatabase("WordBank.db");
-        //db = new DBHelper(this).getWritableDatabase();
-
-        //rb database all rows query
-        //new DBHelper(this).onDeleteAllRows();
-
-        //rb database insert query
-        //new DBHelper(this).onInsert();
-
         getComponents();
 
         levelController = new LevelController();
@@ -142,7 +131,6 @@ public class GameActivity extends AppCompatActivity {
 
                 if(s.toString().equals("0")) {
                     timer.stopTimer();
-                    System.out.println("game over timed out");
                     Intent intent = new Intent(GameActivity.this, GameFinishedActivity.class);
                     Bundle mBundle = new Bundle();
                     mBundle.putBoolean("success", false);
@@ -248,11 +236,9 @@ public class GameActivity extends AppCompatActivity {
         byte[] decryptB64Byte = Base64.decode(string, Base64.DEFAULT);
         try {
             decryptB64Text = new String(decryptB64Byte, "UTF-8");
-            //System.out.println("decryptB64 " + decryptB64Text);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        System.out.println("decoded " + decryptB64Text);
         return decryptB64Text;
     }
 }
