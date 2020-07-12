@@ -1,7 +1,6 @@
 package com.compsci702.compsci702app.Tools;
 
 import android.text.TextUtils;
-import com.compsci702.compsci702app.Level.Level;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -12,40 +11,47 @@ public class Scrambler {
     //Scramble sentence by scrambling longest words first. Number of words scrambled depends
     //on the level. Also probability of an additional scramble that increases with level.
     //Calls to all other private methods from this method.
-    public String scrambleSentence(String sentence, Level level){
+    public String scrambleSentence(String sentence, String difficulty){
 
         List<String> sentenceArray = Arrays.asList(sentence.split(" "));
 
         String[] sortedArray = sortArray(sentence);
 
-        int num = level.getLevelNumber();
+        int num;
+        if (difficulty.equals("Easy")){
+            num = 1;
+        }else if(difficulty.equals("Medium")){
+            num = 2;
+        }else{
+            num = 3;
+        }
+
         if(num >= sentenceArray.size()){ num = sentenceArray.size(); }
 
         for (int i = 0 ; i< num; i++){
             String wordToFind = sortedArray[i];
             int index = sentenceArray.indexOf(wordToFind);
 
-            String scrambledWord = scrambleString(wordToFind,level);
+            String scrambledWord = scrambleString(wordToFind,num);
             sentenceArray.set(index,scrambledWord);
         }
 
-        if(additionalScramble(level)){
+        if(additionalScramble(num)){
             int index = randomNumber(0,sentenceArray.size()-1);
             String word = sentenceArray.get(index);
 
-            String scrambledWord = scrambleString(word,level);
+            String scrambledWord = scrambleString(word,num);
             sentenceArray.set(index,scrambledWord);
         }
         return TextUtils.join(" ", sentenceArray);
     }
 
     //Scramble the particular word in the sentence. Amount of scrambling depends on the level.
-    private String scrambleString(String word, Level level) {
+    private String scrambleString(String word, int num) {
 
-        int levelNum = level.getLevelNumber();
         char[] sentenceArray = word.toCharArray();
 
-        int[] range = getRange(sentenceArray, levelNum);
+        int[] range = getRange(sentenceArray, num);
         char[] scrambledArray = shuffleChars(sentenceArray, range[0],range[1]);
         String scrambledString = new String(scrambledArray);
 
@@ -97,9 +103,9 @@ public class Scrambler {
 
     //Returns whether an additional word will be scrambled for the level. Based on a probability
     //that increases with the level.
-    private boolean additionalScramble(Level level){
+    private boolean additionalScramble(int num){
 
-        double probability = (double)level.getLevelNumber()/10;
+        double probability = (double)num/10;
         double random = Math.random();
         if(probability < random){
             return false;
@@ -110,7 +116,6 @@ public class Scrambler {
 
     //Gets random number within min max range specified
     private int randomNumber(int min, int max){
-
         return (int)(Math.random() * ((max - min) + 1)) + min;
     }
 }

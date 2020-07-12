@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Activity.HighScoreActivity"
+    android:weightSum="20">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:text="High Scores"
+        android:textSize="30sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Easy:"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <TextView
+        android:id="@+id/easyText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:text="1000"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Medium:"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <TextView
+        android:id="@+id/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:text="1000"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Hard:"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <TextView
+        android:id="@+id/hardText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:text="1000"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:textColor="@color/darkGrey"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_normal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="Home"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:layout_marginTop="25dp"
+        android:onClick="homeClicked"/>
+    </LinearLayout>
+
+</LinearLayout>

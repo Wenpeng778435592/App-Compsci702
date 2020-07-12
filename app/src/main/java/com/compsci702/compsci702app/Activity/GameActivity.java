@@ -1,61 +1,54 @@
 package com.compsci702.compsci702app.Activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.compsci702.compsci702app.Level.Level;
-import com.compsci702.compsci702app.Level.Level1;
-import com.compsci702.compsci702app.Level.LevelType;
-import com.compsci702.compsci702app.LevelController;
+import com.compsci702.compsci702app.Data.Phrase;
 import com.compsci702.compsci702app.R;
-import com.compsci702.compsci702app.Tools.DBHelper;
-import com.compsci702.compsci702app.Tools.MinuteTimer;
+import com.compsci702.compsci702app.Tools.ScoreManager;
+import com.compsci702.compsci702app.Tools.Timer;
+import com.compsci702.compsci702app.Tools.SentenceExtractor;
 import com.compsci702.compsci702app.Tools.SentenceProcessor;
+
+import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
 
-    LinearLayout nextLevelLayout;
     LinearLayout mainGameLayout;
-    LinearLayout levelFinishedLayout;
 
-    TextView levelText;
-    TextView levelDescription;
     TextView mainText;
-    TextView timerText;
-    TextView progressText;
-    TextView levelFinishedText;
-    TextView levelFinishedDescription;
+    TextView bonusScoreText;
+    TextView scoreText;
+
+    String difficulty;
 
     EditText inputText;
 
     ProgressBar progressBar;
 
-    Level currentLevel;
-    LevelController levelController;
+    SentenceExtractor sentenceExtractor;
+    ScoreManager scoreManager;
 
     private SoundPool soundPool;
     private int dingSound;
     private SentenceProcessor sentenceProcessor;
-    private MinuteTimer timer;
+    private Timer timer;
+
+    private boolean started = false;
+    private int timeInMillis = 20000;
+
+    private ArrayList<Phrase> correctlyUnscrambledPhrases = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +56,15 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         getComponents();
+        showKeyboard(inputText);
 
-        levelController = new LevelController();
-        currentLevel = new Level1(this);
-        timer = new MinuteTimer(timerText);
-        this.mainText.setText(currentLevel.getNextSentence());
-        this.levelText.setText(currentLevel.getLevelText());
-        this.levelDescription.setText(currentLevel.getLevelDescription());
+        difficulty = getIntent().getExtras().getString("difficulty");
+
+        timer = new Timer(progressBar, timeInMillis);
+
+        scoreManager = new ScoreManager(scoreText,bonusScoreText);
+        sentenceExtractor = new SentenceExtractor(this, difficulty);
+        this.mainText.setText(sentenceExtractor.getNextSentence());
 
         //Set up sound player
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -84,111 +79,61 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(started == false){
+                    timer.startTimer(GameActivity.this);
+                    started = true;
+                }
 
                 mainText.setText(sentenceProcessor.getColourMatchedString(s.toString(), mainText.getText().toString(),
-                        currentLevel.getTargetSentence()));
+                        sentenceExtractor.getTargetPhraseString()));
 
                 //If the word the user entered equals the target word increase count by one for the Level and
                 //play sound.
-                if(currentLevel.checkMatch(s.toString())){
-                    soundPool.play(dingSound, 1, 1, 0, 0, 1);
-
-                    progressBar.setProgress(currentLevel.getCurrentWordCount());
-                    progressText.setText(currentLevel.getProgressIndicatorText());
-
-                    if(currentLevel.levelFinished()){
-                        setLevelFinishedLayout();
-                    } else {
-                        //If the level isn't finished display the next sentence in the list.
-                        mainText.setText(currentLevel.getNextSentence());
-                        inputText.setText("");
-                    }
+                if(sentenceExtractor.checkMatch(s.toString())){
+                    phraseMatched();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) { }
         });
-
-        timerText.addTextChangedListener(new TextWatcher(){
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void afterTextChanged(Editable s) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if(s.toString().equals("0")) {
-                    timer.stopTimer();
-                    Intent intent = new Intent(GameActivity.this, GameFinishedActivity.class);
-                    Bundle mBundle = new Bundle();
-                    mBundle.putBoolean("success", false);
-                    intent.putExtras(mBundle);
-                    startActivity(intent);
-                }
-            }
-        });
-
     }
 
-    public void nextLevelStartClicked(View view){
-        nextLevelLayout.setVisibility(View.GONE);
-        levelFinishedLayout.setVisibility(View.GONE);
-        mainGameLayout.setVisibility(View.VISIBLE);
-
-        timer.startTimer();
-
-        mainText.setText(currentLevel.getNextSentence());
-        inputText.setText("");
-
-        progressText.setText(currentLevel.getProgressIndicatorText());
-        progressBar.setMax(currentLevel.getWordCountGoal());
-        progressBar.setProgress(currentLevel.getCurrentWordCount());
-
-        showKeyboard(inputText);
-    }
-
-    //Player clicks next level button from the level passed screen. Leads player to
-    //next level information screen.
-    public void nextLevelInfoClicked(View view){
-        nextLevelLayout.setVisibility(View.VISIBLE);
-        levelFinishedLayout.setVisibility(View.GONE);
-        mainGameLayout.setVisibility(View.GONE);
-
-        this.levelText.setText(currentLevel.getLevelText());
-        this.levelDescription.setText(currentLevel.getLevelDescription());
-    }
-
-    //Shown when user completes the level. Shows level passed text.
-    private void setLevelFinishedLayout(){
-        hideKeyboard();
-        mainGameLayout.setVisibility(View.GONE);
-        nextLevelLayout.setVisibility(View.GONE);
-        levelFinishedLayout.setVisibility(View.VISIBLE);
-
+    @Override
+    public void onBackPressed()
+    {
         timer.stopTimer();
+        super.onBackPressed();
+    }
 
-        //If this is the last level, load the game finished class.
-        if (currentLevel.getLevelType() == LevelType.LEVEL_3) {
-            Intent intent = new Intent(this,GameFinishedActivity.class);
-            Bundle mBundle = new Bundle();
-            mBundle.putBoolean("success", true);
-            intent.putExtras(mBundle);
-            startActivity(intent);
-        }else{
-            currentLevel = levelController.getNextLevel(currentLevel, this);
-            levelFinishedText.setText(currentLevel.getCongratulationsText());
-            levelFinishedDescription.setText(currentLevel.getLevelFinishedDescription());
-        }
+    public void timerhasFinished(){
+        hideKeyboard();
+        timer.stopTimer();
+        Intent intent = new Intent(GameActivity.this, GameFinishedActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelableArrayList("phraseList", correctlyUnscrambledPhrases);
+        mBundle.putInt("score", scoreManager.getScore());
+        mBundle.putString("difficulty", difficulty);
+        intent.putExtras(mBundle);
+        startActivity(intent);
+    }
+
+    public void phraseMatched(){
+        correctlyUnscrambledPhrases.add(sentenceExtractor.getTargetPhrase());
+        int millisLeft = timer.stopTimer();
+        scoreManager.addScore(millisLeft, timer.getTimePerPhrase());
+        soundPool.play(dingSound, 1, 1, 0, 0, 1);
+        mainText.setText(sentenceExtractor.getNextSentence());
+        inputText.setText("");
+        int newTime = timeInMillis-1000*(correctlyUnscrambledPhrases.size()/3);
+        timer = new Timer(progressBar,newTime);
+        timer.startTimer(GameActivity.this);
     }
 
     private void showKeyboard(EditText inputTextField) {
         inputTextField.requestFocus();
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void hideKeyboard() {
@@ -198,21 +143,11 @@ public class GameActivity extends AppCompatActivity {
 
     //Get all the necessary components from the layout file.
     private void getComponents(){
-        nextLevelLayout = findViewById(R.id.nextLevelLayout);
-        levelFinishedLayout = findViewById(R.id.levelFinishedLayout);
         mainGameLayout = findViewById(R.id.mainGameLayout);
-
-        levelText = findViewById(R.id.levelText);
-        levelDescription = findViewById(R.id.levelDescription);
-        levelFinishedText = findViewById(R.id.levelFinishedText);
-        levelFinishedDescription = findViewById(R.id.levelFinishedDescription);
-
         inputText = findViewById(R.id.inputText);
         mainText = findViewById(R.id.mainText);
-        progressText = findViewById(R.id.progressText);
-        timerText = findViewById(R.id.timerText);
-        levelDescription = findViewById(R.id.levelDescription);
-
+        scoreText = findViewById(R.id.scoreText);
+        bonusScoreText = findViewById(R.id.bonusText);
         progressBar = findViewById(R.id.progressBar);
     }
 }

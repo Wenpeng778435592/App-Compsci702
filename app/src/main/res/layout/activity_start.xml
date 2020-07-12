@@ -17,16 +17,78 @@
         android:textColor="@color/darkGrey"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_normal"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:text="Start Game"
+        android:text="Easy"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="20sp"
         app:fontFamily="@font/circularbold"
         android:layout_marginTop="60dp"
         android:onClick="startClicked"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_normal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:layout_marginTop="15dp"
+        android:onClick="startClicked"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_normal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="Hard"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20sp"
+        app:fontFamily="@font/circularbold"
+        android:layout_marginTop="15dp"
+        android:onClick="startClicked"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp">
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button_normal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/highscore"
+            android:scaleType="fitCenter"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="20sp"
+            app:fontFamily="@font/circularbold"
+            android:layout_marginTop="15dp"
+            android:onClick="highScoreClicked"
+            android:layout_marginRight="20dp" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button_normal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/heart_full"
+            android:scaleType="fitCenter"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="20sp"
+            app:fontFamily="@font/circularbold"
+            android:layout_marginTop="15dp"
+            android:onClick="favouriteClicked"/>
+    </LinearLayout>
 
 </LinearLayout>

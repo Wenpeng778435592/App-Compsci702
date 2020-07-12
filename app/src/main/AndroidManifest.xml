@@ -13,11 +13,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.GameActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Activity.GameFinishedActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activity.StartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.GameFinishedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.HighScoreActivity" />
+        <activity android:name=".Activity.FavouriteActivity"></activity>
     </application>
 
 </manifest>

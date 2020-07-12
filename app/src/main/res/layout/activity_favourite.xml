@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.GameFinishedActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".Activity.FavouriteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:id="@+id/gameFinishedLayout"
-        android:weightSum="10">
+        android:weightSum="12">
 
         <TextView
             android:id="@+id/gameOverText"
@@ -22,29 +21,40 @@
             android:layout_height="0dp"
             android:textSize="30sp"
             app:fontFamily="@font/circularbold"
-            android:text="Game Over"
+            android:text="Favourite phrases"
             android:gravity="bottom"
             android:textColor="@color/darkGrey"
-            android:layout_weight="1"
-            android:layout_marginTop="25dp"/>
+            android:layout_weight="2"
+            android:layout_marginTop="5dp"/>
 
-        <TextView
-            android:id="@+id/scoreText"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Score: 1000"
-            android:textSize="24sp"
-            app:fontFamily="@font/circularbold"
-            android:textColor="@color/darkGrey"/>
-
-        <ExpandableListView
-            android:id="@+id/expandableListView"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_weight="8">
+
+            <TextView
+                android:id="@+id/noFavouritesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:fontFamily="@font/circularitalic"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="50dp"
+                android:text="You don't have any favourited phrases yet. Click the heart button after finishing a game to save a phrase!"
+                />
+
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"/>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -61,23 +71,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="20sp"
                 app:fontFamily="@font/circularbold"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="20dp"
-                android:onClick="homeClicked"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_normal"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:text="Replay"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="20sp"
-                app:fontFamily="@font/circularbold"
-                android:layout_marginTop="25dp"
-                android:onClick="replayClicked"/>
-
+                android:onClick="homeClicked"
+                />
         </LinearLayout>
 
     </LinearLayout>
