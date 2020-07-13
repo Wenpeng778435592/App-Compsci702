@@ -7,12 +7,31 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".Activity.HighScoreActivity"
-    android:weightSum="20">
+    android:weightSum="10">
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adBannerView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="18"
+        android:orientation="vertical"
+        android:layout_weight="9"
+        android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="4"
+        android:gravity="center"
         android:text="High Scores"
         android:textSize="30sp"
         app:fontFamily="@font/circularbold"
@@ -92,6 +111,7 @@
         app:fontFamily="@font/circularbold"
         android:layout_marginTop="25dp"
         android:onClick="homeClicked"/>
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

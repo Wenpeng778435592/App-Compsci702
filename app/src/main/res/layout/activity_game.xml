@@ -6,28 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Activity.GameActivity"
     tools:layout_editor_absoluteY="81dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/mainGameLayout"
+    android:weightSum="100">
 
-    <LinearLayout
-        android:id="@+id/mainGameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="55"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:weightSum="20">
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adBannerView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            </com.google.android.gms.ads.AdView>
 
             <LinearLayout
                 android:id="@+id/progressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="5"
                 android:orientation="vertical"
-                android:layout_marginTop="15dp"
                 android:gravity="center">
 
                 <TextView
@@ -57,7 +63,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="4">
+                android:layout_weight="8">
 
             <TextView
                 android:id="@+id/mainText"
@@ -68,9 +74,9 @@
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/circularbold"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:layout_marginTop="15dp"/>
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/bonusText"
@@ -80,15 +86,15 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/circularbold"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp" />
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp" />
             </FrameLayout>
 
             <EditText
                 android:id="@+id/inputText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="4"
                 android:gravity="center"
                 android:textSize="20sp"
                 app:fontFamily="@font/circularbook"/>
@@ -97,9 +103,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="45">
         </View>
 
-    </LinearLayout>
 
 </LinearLayout>

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,25 +20,25 @@ import com.compsci702.compsci702app.Tools.ScoreManager;
 import com.compsci702.compsci702app.Tools.Timer;
 import com.compsci702.compsci702app.Tools.SentenceExtractor;
 import com.compsci702.compsci702app.Tools.SentenceProcessor;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
 
-    LinearLayout mainGameLayout;
+    private TextView mainText;
+    private TextView bonusScoreText;
+    private TextView scoreText;
 
-    TextView mainText;
-    TextView bonusScoreText;
-    TextView scoreText;
+    private String difficulty;
 
-    String difficulty;
+    private EditText inputText;
+    private ProgressBar progressBar;
+    private AdView adBannerView;
 
-    EditText inputText;
-
-    ProgressBar progressBar;
-
-    SentenceExtractor sentenceExtractor;
-    ScoreManager scoreManager;
+    private SentenceExtractor sentenceExtractor;
+    private ScoreManager scoreManager;
 
     private SoundPool soundPool;
     private int dingSound;
@@ -54,6 +54,10 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        adBannerView = findViewById(R.id.adBannerView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adBannerView.loadAd(adRequest);
 
         getComponents();
         showKeyboard(inputText);
@@ -143,7 +147,6 @@ public class GameActivity extends AppCompatActivity {
 
     //Get all the necessary components from the layout file.
     private void getComponents(){
-        mainGameLayout = findViewById(R.id.mainGameLayout);
         inputText = findViewById(R.id.inputText);
         mainText = findViewById(R.id.mainText);
         scoreText = findViewById(R.id.scoreText);

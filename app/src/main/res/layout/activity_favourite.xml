@@ -15,6 +15,16 @@
         android:id="@+id/gameFinishedLayout"
         android:weightSum="12">
 
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adBannerView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
+
         <TextView
             android:id="@+id/gameOverText"
             android:layout_width="wrap_content"
@@ -24,7 +34,7 @@
             android:text="Favourite phrases"
             android:gravity="bottom"
             android:textColor="@color/darkGrey"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_marginTop="5dp"/>
 
         <FrameLayout

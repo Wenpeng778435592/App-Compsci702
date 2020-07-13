@@ -1,15 +1,22 @@
 package com.compsci702.compsci702app.Activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.compsci702.compsci702app.R;
 import com.compsci702.compsci702app.Tools.DBHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class StartActivity extends AppCompatActivity {
+
+    private AdView adBannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +24,18 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         DBHelper dbHelper = new DBHelper(this);
         dbHelper.createDB();
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+
+        adBannerView = findViewById(R.id.adBannerView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adBannerView.loadAd(adRequest);
+
     }
 
     public void startClicked(View view){
