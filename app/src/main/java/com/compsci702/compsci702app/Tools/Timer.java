@@ -1,5 +1,6 @@
 package com.compsci702.compsci702app.Tools;
 
+import android.media.SoundPool;
 import android.os.CountDownTimer;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,15 +14,18 @@ public class Timer {
     private CountDownTimer timer;
     private int millisLeft;
     private int countdownMillis;
+    private boolean playing = false;
+    private int id;
+    private SoundPool soundpool;
 
     public Timer(ProgressBar progressBar, int countdownMillis){
         this.progressBar = progressBar;
         this.progressBar.setProgress(100);
         this.countdownMillis = countdownMillis;
-        System.out.println("timer " + countdownMillis/1000);
     }
 
-    public void startTimer(final GameActivity gameActivity){
+    public void startTimer(final GameActivity gameActivity, final SoundPool soundPool, final int clockSound){
+        soundpool = soundPool;
         timer = new CountDownTimer(countdownMillis, 1000) {
             public void onTick(long millisUntilFinished) {
                 millisLeft = (int)millisUntilFinished;
@@ -31,18 +35,26 @@ public class Timer {
                     progressBar.setProgressDrawable(gameActivity.getDrawable(R.drawable.progress_bar_orange));
                 }else{
                     progressBar.setProgressDrawable(gameActivity.getDrawable(R.drawable.progress_bar_red));
+                    if (!playing) {
+                        playing = true;
+                        id = soundPool.play(clockSound, 1, 1, 0, 0, 1);
+                    }
                 }
                 progressBar.setProgress((int)((millisUntilFinished*100)/countdownMillis));
             }
             public void onFinish() {
                 progressBar.setProgress(0);
                 gameActivity.timerhasFinished();
+                soundPool.stop(id);
             }
         }.start();
     }
 
     public int stopTimer(){
-        timer.cancel();
+        soundpool.stop(id);
+        if(timer != null){
+            timer.cancel();
+        }
         return millisLeft;
     }
 

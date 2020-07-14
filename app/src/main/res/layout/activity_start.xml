@@ -9,15 +9,15 @@
     android:gravity="center"
     android:weightSum="10">
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adBannerView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-    </com.google.android.gms.ads.AdView>
+<!--    <com.google.android.gms.ads.AdView-->
+<!--        xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+<!--        android:id="@+id/adBannerView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        ads:adSize="BANNER"-->
+<!--        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">-->
+<!--    </com.google.android.gms.ads.AdView>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,7 +93,7 @@
             app:fontFamily="@font/circularbold"
             android:layout_marginTop="15dp"
             android:onClick="highScoreClicked"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="15dp" />
 
         <ImageButton
             android:layout_width="60dp"
@@ -107,7 +107,23 @@
             android:textSize="20sp"
             app:fontFamily="@font/circularbold"
             android:layout_marginTop="15dp"
-            android:onClick="favouriteClicked"/>
+            android:onClick="favouriteClicked"
+            android:layout_marginRight="15dp"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button_normal"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:src="@drawable/info"
+            android:scaleType="fitCenter"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="20sp"
+            app:fontFamily="@font/circularbold"
+            android:layout_marginTop="15dp"
+            android:onClick="infoClicked" />
+
     </LinearLayout>
 
 </LinearLayout>

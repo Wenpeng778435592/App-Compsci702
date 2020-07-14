@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.InfoActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:weightSum="10">
+
+<!--    <com.google.android.gms.ads.AdView-->
+<!--        xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+<!--        android:id="@+id/adBannerView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        ads:adSize="BANNER"-->
+<!--        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">-->
+<!--    </com.google.android.gms.ads.AdView>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:fontFamily="@font/circularbold"
+        android:text="How to play"
+        android:textColor="@color/darkGrey"
+        android:textSize="30sp"
+        android:gravity="center"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_weight="6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:fontFamily="@font/circularbold"
+                android:text="Game rules:"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                app:fontFamily="@font/circularbook"
+                android:text="@string/description1"
+                android:textColor="@color/darkGrey"
+                android:textSize="18sp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/game_screenshot"
+                android:layout_marginBottom="5dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                app:fontFamily="@font/circularbook"
+                android:text="@string/description2"
+                android:textColor="@color/darkGrey"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:fontFamily="@font/circularbold"
+                android:text="\nSaving phrases"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                app:fontFamily="@font/circularbook"
+                android:text="@string/phrasedescription"
+                android:textColor="@color/darkGrey"
+                android:textSize="18sp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:src="@drawable/game_over"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_normal"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="Home"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="20sp"
+            app:fontFamily="@font/circularbold"
+            android:layout_marginTop="25dp"
+            android:onClick="homeClicked"/>
+    </LinearLayout>
+
+</LinearLayout>

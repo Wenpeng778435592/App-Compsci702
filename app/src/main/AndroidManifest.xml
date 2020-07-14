@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.compsci702.compsci702app">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activity.InfoActivity"></activity>
         <activity
             android:name=".Activity.GameActivity"
             android:screenOrientation="portrait" />
@@ -27,11 +26,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.HighScoreActivity" />
-        <activity android:name=".Activity.FavouriteActivity"></activity>
+        <activity android:name=".Activity.FavouriteActivity" />
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--            android:value="ca-app-pub-3940256099942544~3347511713" />-->
     </application>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

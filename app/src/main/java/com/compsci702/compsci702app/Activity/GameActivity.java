@@ -2,6 +2,7 @@ package com.compsci702.compsci702app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +21,8 @@ import com.compsci702.compsci702app.Tools.ScoreManager;
 import com.compsci702.compsci702app.Tools.Timer;
 import com.compsci702.compsci702app.Tools.SentenceExtractor;
 import com.compsci702.compsci702app.Tools.SentenceProcessor;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
@@ -35,18 +36,29 @@ public class GameActivity extends AppCompatActivity {
 
     private EditText inputText;
     private ProgressBar progressBar;
-    private AdView adBannerView;
+    //private AdView adBannerView;
 
     private SentenceExtractor sentenceExtractor;
     private ScoreManager scoreManager;
 
     private SoundPool soundPool;
     private int dingSound;
+    private int clockSound;
     private SentenceProcessor sentenceProcessor;
     private Timer timer;
 
     private boolean started = false;
-    private int timeInMillis = 20000;
+    private int timeInMillis = 30000;
+    private int countdownstep = 1000;
+
+    private int easyStepThreshold1 =20000;
+    private int easyStepThreshold2 =15000;
+
+    private int mediumStepThreshold1 =18000;
+    private int mediumStepThreshold2 =13000;
+
+    private int hardStepThreshold1 =15000;
+    private int hardStepThreshold2 =10000;
 
     private ArrayList<Phrase> correctlyUnscrambledPhrases = new ArrayList<>();
 
@@ -55,9 +67,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        adBannerView = findViewById(R.id.adBannerView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adBannerView.loadAd(adRequest);
+//        adBannerView = findViewById(R.id.adBannerView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        adBannerView.loadAd(adRequest);
 
         getComponents();
         showKeyboard(inputText);
@@ -71,20 +83,30 @@ public class GameActivity extends AppCompatActivity {
         this.mainText.setText(sentenceExtractor.getNextSentence());
 
         //Set up sound player
+//        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+//                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+//                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+//                .build();
+//        soundPool = new SoundPool.Builder()
+//                .setMaxStreams(6)
+//                .setAudioAttributes(audioAttributes)
+//                .build();
+
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         dingSound = soundPool.load(this, R.raw.ding, 1);
+        clockSound = soundPool.load(this,R.raw.clock,1);
+
         sentenceProcessor = new SentenceProcessor(this);
 
         //Add listener to user input field to watch for changes
         inputText.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(started == false){
-                    timer.startTimer(GameActivity.this);
+                    timer.startTimer(GameActivity.this, soundPool, clockSound);
                     started = true;
                 }
 
@@ -106,7 +128,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        timer.stopTimer();
+        if(timer != null){
+            timer.stopTimer();
+        }
         super.onBackPressed();
     }
 
@@ -129,9 +153,37 @@ public class GameActivity extends AppCompatActivity {
         soundPool.play(dingSound, 1, 1, 0, 0, 1);
         mainText.setText(sentenceExtractor.getNextSentence());
         inputText.setText("");
-        int newTime = timeInMillis-1000*(correctlyUnscrambledPhrases.size()/3);
-        timer = new Timer(progressBar,newTime);
-        timer.startTimer(GameActivity.this);
+
+        getNewTime();
+        if(timeInMillis > 0) {
+            timer = new Timer(progressBar, timeInMillis);
+            timer.startTimer(GameActivity.this,soundPool,clockSound);
+        }
+    }
+
+    private void getNewTime(){
+        int threshold1;
+        int threshold2;
+
+        if(difficulty.equals("easy")){
+            threshold1 = easyStepThreshold1;
+            threshold2 = easyStepThreshold2;
+        }else if(difficulty.equals("medium")){
+            threshold1 = mediumStepThreshold1;
+            threshold2 = mediumStepThreshold2;
+        }else{
+            threshold1 = hardStepThreshold1;
+            threshold2 = hardStepThreshold2;
+        }
+
+        if((timeInMillis < threshold1)){
+            countdownstep = 500;
+        }else if(timeInMillis < threshold2){
+            countdownstep = 250;
+        }
+
+        timeInMillis = timeInMillis-countdownstep;
+        System.out.println(timeInMillis + "-" + countdownstep);
     }
 
     private void showKeyboard(EditText inputTextField) {

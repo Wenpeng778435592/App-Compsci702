@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Compsci702App</string>
+    <string name="description1">Correctly unscramble and type as many sentences as you can before the
+        timer runs out!</string>
+    <string name="description2">Every sentence that you get correct gives you +100 points. If you can get
+        the correct sentence in half or three quarters of the given time, you will get a +50 and
+        +25 time bonus!</string>
+    <string name="phrasedescription">After each round, the phrases you have correctly unscrambled
+        will be displayed. Click on them to see its meaning and example and click the heart to
+        save it to your favourites.</string>
 </resources>

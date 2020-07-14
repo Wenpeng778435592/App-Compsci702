@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.compsci702.compsci702app.R;
 import com.compsci702.compsci702app.Tools.DBHelper;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 public class HighScoreActivity extends AppCompatActivity {
 
@@ -18,16 +18,16 @@ public class HighScoreActivity extends AppCompatActivity {
     private TextView mediumText;
     private TextView hardText;
     private DBHelper dbHelper;
-    private AdView adBannerView;
+//    private AdView adBannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
-
-        adBannerView = findViewById(R.id.adBannerView);
-        AdRequest request = new AdRequest.Builder().build();
-        adBannerView.loadAd(request);
+//
+//        adBannerView = findViewById(R.id.adBannerView);
+//        AdRequest request = new AdRequest.Builder().build();
+//        adBannerView.loadAd(request);
 
         easyText = findViewById(R.id.easyText);
         mediumText = findViewById(R.id.mediumText);

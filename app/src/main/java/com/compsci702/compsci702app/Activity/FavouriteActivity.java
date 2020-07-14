@@ -13,8 +13,8 @@ import com.compsci702.compsci702app.Adapters.ExpandableListAdapter;
 import com.compsci702.compsci702app.Data.Phrase;
 import com.compsci702.compsci702app.R;
 import com.compsci702.compsci702app.Tools.DBHelper;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,16 +31,16 @@ public class FavouriteActivity extends AppCompatActivity {
     private ArrayList<String> listHeaderData = new ArrayList<>();
 
     private DBHelper dbHelper;
-    private AdView adBannerView;
+//    private AdView adBannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
 
-        adBannerView = findViewById(R.id.adBannerView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adBannerView.loadAd(adRequest);
+//        adBannerView = findViewById(R.id.adBannerView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        adBannerView.loadAd(adRequest);
 
         dbHelper = new DBHelper(this);
         Cursor cursor = dbHelper.getFavouritePhrases();
